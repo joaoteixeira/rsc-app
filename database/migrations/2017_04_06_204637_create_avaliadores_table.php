@@ -15,15 +15,17 @@ class CreateAvaliadoresTable extends Migration
     {
         Schema::create('avaliadores', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('instituicao_id')->unsigned();
-
+            $table->integer('instituicao_id')->unsigned()->nullable();
+            $table->enum('tipo', ['interno', 'externo']);
+            $table->string('banca')->nullable();
             $table->string('nome');
-            $table->string('siape')->unique();
-            $table->string('cpf')->unique();
-            $table->string('email')->unique();
-            $table->string('banco');
-            $table->string('agencia');
-            $table->string('conta');
+            $table->string('siape')->nullable();
+            $table->string('cpf')->nullable();
+            $table->string('email')->nullable();
+            $table->string('banco')->nullable();
+            $table->string('agencia')->nullable();
+            $table->string('conta')->nullable();
+            $table->string('instituicao_');
             $table->enum('status_pagamento', ['pendente', 'pago', 'restricao']);
             $table->timestamps();
 

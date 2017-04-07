@@ -16,7 +16,9 @@ class CreateProcessosTable extends Migration
         Schema::create('processos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('servidor');
-            $table->string('link');
+            $table->string('siape');
+            $table->string('link')->nullable();
+            $table->string('banca');
             $table->string('processo');
             $table->timestamps();
         });

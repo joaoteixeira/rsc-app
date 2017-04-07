@@ -13,7 +13,7 @@ class CreateProcessoAvaliador extends Migration
      */
     public function up()
     {
-        Schema::create('processo_avaliador', function (Blueprint $table) {
+        Schema::create('avaliador_processo', function (Blueprint $table) {
 
             $table->integer('processo_id')->unsigned()->index();
             $table->foreign('processo_id')->references('id')
