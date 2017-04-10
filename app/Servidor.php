@@ -4,14 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Avaliador extends Model
+class Servidor extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'avaliadores';
+
+    protected $table = 'servidores';
 
     /**
      * The attributes that are mass assignable.
@@ -19,11 +20,10 @@ class Avaliador extends Model
      * @var array
      */
 
-    protected $fillable = ['nome', 'siape', 'cpf', 'email', 'tipo', 'banco', 'agencia', 'conta', 'instituicao_', 'status_pagamento'];
+    protected $fillable = ['nome', 'siape'];
 
     public function processos()
     {
-        return $this->belongsToMany('App\Processo')->withTimestamps();
+        return$this->hasMany('App\Processo');
     }
-
 }

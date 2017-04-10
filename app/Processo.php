@@ -20,7 +20,12 @@ class Processo extends Model
      * @var array
      */
 
-    protected $fillable = ['servidor', 'siape', 'link', 'banca', 'processo'];
+    protected $fillable = ['servidor_id', 'link', 'banca', 'processo'];
+
+    public function servidor()
+    {
+        return $this->belongsTo('App\Servidor', 'servidor_id');
+    }
 
     public function avaliadores()
     {

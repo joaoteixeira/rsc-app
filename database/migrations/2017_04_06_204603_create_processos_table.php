@@ -15,12 +15,14 @@ class CreateProcessosTable extends Migration
     {
         Schema::create('processos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('servidor');
-            $table->string('siape');
+            $table->integer('servidor_id')->unsigned();
+            //tipo RSC I / II / III
             $table->string('link')->nullable();
             $table->string('banca');
             $table->string('processo');
             $table->timestamps();
+
+            $table->foreign('servidor_id')->references('id')->on('servidor');
         });
     }
 

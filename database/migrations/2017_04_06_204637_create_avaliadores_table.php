@@ -17,7 +17,7 @@ class CreateAvaliadoresTable extends Migration
             $table->increments('id');
             $table->integer('instituicao_id')->unsigned()->nullable();
             $table->enum('tipo', ['interno', 'externo']);
-            $table->string('banca')->nullable();
+            //$table->string('banca')->nullable();
             $table->string('nome');
             $table->string('siape')->nullable();
             $table->string('cpf')->nullable();

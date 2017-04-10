@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Avaliador;
 use App\Processo;
+use App\Servidor;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-class TestController extends Controller
+class ImportDataController extends Controller
 {
     public function index()
     {
@@ -66,60 +67,68 @@ class TestController extends Controller
 
     private function insertPrepare($row)
     {
+        $servidorData = [
+            'nome'  => $row->interessado_avaliado,
+            'siape' => $row->siape_avaliado,
+        ];
+
+        $servidor = $this->insertServidor($servidorData);
+
+
         $processoData = [
-            'banca'    => intval($row->banca),
-            'servidor' => $row->interessado_avaliado,
-            'siape'    => $row->siape_avaliado,
-            'processo' => $row->processo,
+            'servidor_id' => $servidor->id,
+            'banca'       => intval($row->banca),
+            'processo'    => $row->processo,
         ];
 
         $processo = $this->insertProcesso($processoData);
 
         $avaliadores[] = [
-//            'processo_id'      => $processo->id,
-            'banca'    => intval($row->banca),
             'nome'             => $row->avaliador_interno,
-            'siape'            => intval($row->siape),
             'tipo'             => 'interno',
+            'siape'            => intval($row->siape),
             'instituicao_'     => $row->instituicao_interno,
             'status_pagamento' => $row->status_pagto_interno,
         ];
 
         $avaliadores[] = [
-//            'processo_id'      => $processo->id,
-            'banca'    => intval($row->banca),
             'nome'             => $row->externo_1,
-            //'siape' => $row->siape,
             'tipo'             => 'externo',
+            'siape'            => intval($row->siape_externo_1),
             'instituicao_'     => $row->instituicao_externo_1,
             'status_pagamento' => $row->status_pagto_externo_1,
         ];
 
-        $avaliadores[] = [
-//            'processo_id'      => $processo->id,
-            'banca'    => intval($row->banca),
-            'nome'             => $row->externo_2,
-            //'siape' => $row->siape,
-            'tipo'             => 'externo',
-            'instituicao_'     => $row->instituicao_externo_2,
-            'status_pagamento' => $row->status_pagto_externo_2,
-        ];
+        if (!empty($row->externo_2)) {
+            $avaliadores[] = [
+                'nome'             => $row->externo_2,
+                'tipo'             => 'externo',
+                'siape'            => intval($row->siape_externo_2),
+                'instituicao_'     => $row->instituicao_externo_2,
+                'status_pagamento' => $row->status_pagto_externo_2,
+            ];
+        }
 
         $this->insertAvaliador($avaliadores, $processo);
+    }
 
+    private function insertServidor($servidor)
+    {
+        return Servidor::firstOrCreate($servidor);
     }
 
     private function insertAvaliador($avaliadores, $processo)
     {
-        foreach ($avaliadores as $avaliador)
-            $aval = Avaliador::create($avaliador);
+        foreach ($avaliadores as $avaliador) {
+            $aval = Avaliador::firstOrCreate($avaliador);
             $processo->avaliadores()->attach($aval);
+        }
+
     }
 
     private function insertProcesso($processo)
     {
         return Processo::create($processo);
     }
-
 
 }
