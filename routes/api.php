@@ -16,3 +16,14 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//, 'middleware' => 'auth'
+
+Route::group(['namespace'=>'Api'], function () {
+
+    Route::get('/indicadores', 'DashboardController@index');
+
+//    Route::get('user/profile', function () {
+//        // Uses Auth Middleware
+//    });
+});

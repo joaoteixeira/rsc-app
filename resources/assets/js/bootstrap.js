@@ -18,6 +18,8 @@ require('bootstrap-sass');
  */
 
 window.Vue = require('vue');
+window.VueRouter = require('vue-router');
+window.VueResource = require('vue-resource');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -32,6 +34,15 @@ window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
 };
 
+String.prototype.padLeft = function(l,c) {
+    return Array(l - this.length + 1).join( c || " ") + this;
+};
+
+function pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

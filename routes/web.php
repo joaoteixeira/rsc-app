@@ -11,14 +11,10 @@
 |
 */
 
-use Maatwebsite\Excel;
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
+Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
+Route::get('/dashboard', 'HomeController@index');
+
 Route::get('/import', 'ImportDataController@index');

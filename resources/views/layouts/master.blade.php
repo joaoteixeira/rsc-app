@@ -419,6 +419,7 @@ desired effect
 <script src="{!! asset('plugins/fastclick/fastclick.js') !!}"></script>
 
 <script type="text/javascript" src="{!! asset('js/app.js') !!}"></script>
+<script type="text/javascript" src="{!! asset('js/bundle.js') !!}"></script>
 {{--<script type="text/javascript" src="{!! asset('js/demo.js') !!}"></script>--}}
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
