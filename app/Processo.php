@@ -20,7 +20,7 @@ class Processo extends Model
      * @var array
      */
 
-    protected $fillable = ['servidor_id', 'link', 'banca', 'processo'];
+    protected $fillable = ['servidor_id', 'user_id', 'link', 'banca', 'processo', 'tipo'];
 
     public function servidor()
     {

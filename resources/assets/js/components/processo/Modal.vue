@@ -15,7 +15,7 @@
 
                                     <div class="form-group col-md-8">
                                         <label for="processo">Número do processo</label>
-                                        <input type="text" class="form-control" id="processo" placeholder="Ex.: 0001/2017" v-model="processo.numero">
+                                        <input type="text" class="form-control" id="processo" placeholder="Ex.: 0001/2017" v-model="processo.processo">
                                     </div>
 
                                     <div class="form-group col-md-4">
@@ -58,7 +58,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Salvar</button>
+                        <button type="button" class="btn btn-primary" @click="save()">Salvar</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -77,12 +77,25 @@
         data () {
             return {
                 processo: {
-                    numero: '',
+                    processo: '',
                     banca: '',
                     link: '',
                     tipo: '',
                     user_id: 0
                 }
+            }
+        },
+
+        methods: {
+            save () {
+                this.$http
+                    .post('/api/processo', this.processo)
+                    .then((response) => {
+                        console.log(response)
+                    })
+                    .catch((response) => {
+                        console.log('Error')
+                    })
             }
         }
     }

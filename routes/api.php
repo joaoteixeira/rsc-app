@@ -23,6 +23,8 @@ Route::group(['namespace'=>'Api'], function () {
 
     Route::get('/indicadores', 'DashboardController@index');
 
+    Route::resource('processo', 'ProcessoController');
+
 //    Route::get('user/profile', function () {
 //        // Uses Auth Middleware
 //    });
