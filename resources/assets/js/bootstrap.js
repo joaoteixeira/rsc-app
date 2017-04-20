@@ -18,8 +18,9 @@ require('bootstrap-sass');
  */
 
 window.Vue = require('vue');
-window.VueRouter = require('vue-router');
-window.VueResource = require('vue-resource');
+// window.VueRouter = require('vue-router');
+//var fs = require('fs');
+//const resolve = require('resolve');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -38,7 +39,7 @@ String.prototype.padLeft = function(l,c) {
     return Array(l - this.length + 1).join( c || " ") + this;
 };
 
-function pad(n, width, z) {
+window.pad = function(n, width, z) {
     z = z || '0';
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;

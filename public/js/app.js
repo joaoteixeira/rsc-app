@@ -147,6 +147,9 @@ var AdminLTEOptions;
         //Fix for IE page transitions
         $("body").removeClass("hold-transition");
 
+        //set select2
+        $("select").select2();
+
         //Extend options if external options exist
         if (typeof AdminLTEOptions !== "undefined") {
             $.extend(true,

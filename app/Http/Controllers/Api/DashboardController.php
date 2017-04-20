@@ -28,7 +28,10 @@ class DashboardController extends Controller
         $processos = Processo::all();
 
 
-        return [ 'total' => $processos->count(), 'abertos' => $processos->count() ];
+        return [ 'total' => $processos->count(),
+                 'abertos' => $processos->count(),
+                 'andamento' => $processos->count(),
+                 'financeira' => $processos->count()];
     }
 
 }

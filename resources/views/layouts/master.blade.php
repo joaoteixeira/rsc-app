@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="{!! asset('plugins/datepicker/datepicker3.css') !!}">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{!! asset('plugins/daterangepicker/daterangepicker.css') !!}">
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="{!! asset('plugins/select2/select2.css') !!}">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{!! asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') !!}">
 
@@ -411,6 +413,8 @@ desired effect
 <script src="{!! asset('plugins/daterangepicker/daterangepicker.js') !!}"></script>
 <!-- datepicker -->
 <script src="{!! asset('plugins/datepicker/bootstrap-datepicker.js') !!}"></script>
+<!-- select2 -->
+<script src="{!! asset('plugins/select2/select2.full.js') !!}"></script>
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{!! asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') !!}"></script>
 <!-- Slimscroll -->
@@ -419,7 +423,7 @@ desired effect
 <script src="{!! asset('plugins/fastclick/fastclick.js') !!}"></script>
 
 <script type="text/javascript" src="{!! asset('js/app.js') !!}"></script>
-<script type="text/javascript" src="{!! asset('js/bundle.js') !!}"></script>
+<script type="text/javascript" src="{!! asset('js/main.js') !!}"></script>
 {{--<script type="text/javascript" src="{!! asset('js/demo.js') !!}"></script>--}}
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

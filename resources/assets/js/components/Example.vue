@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div id="example" class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
@@ -16,6 +16,7 @@
 
 <script>
     export default {
+        name: 'example',
         mounted() {
             console.log('Component mounted.')
         }

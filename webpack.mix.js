@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const { mix } = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +11,18 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/bundle.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+// mix.webpackConfig({
+//     resolve: {
+//         // modules: [
+//         //     path.resolve(__dirname, 'vendor/laravel/spark/resources/assets/js')
+//         // ]
+//         // alias: {
+//         //     '@': resolve('src'),
+//         //     'utils': resolve('src/utils')
+//         // }
+//     }
+// });
+
+mix.js('resources/assets/js/main.js', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css');
+    //.extract(['vue']);
