@@ -20,7 +20,7 @@ class Servidor extends Model
      * @var array
      */
 
-    protected $fillable = ['nome', 'siape'];
+    protected $fillable = ['nome', 'siape', 'email'];
 
     public function processos()
     {

@@ -15,7 +15,7 @@ class CreateProcessosTable extends Migration
     {
         Schema::create('processos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('servidor_id')->unsigned();
+            $table->integer('servidor_id')->unsigned()->nullable();
             //tipo RSC I / II / III
             $table->string('link')->nullable();
             $table->string('banca');

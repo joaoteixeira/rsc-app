@@ -1,7 +1,7 @@
 <template>
     <transition name="processo-modal">
         <div id="processo_modal" class="modal fade">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -12,48 +12,73 @@
                         <form role="form">
                             <div class="box-body">
                                 <div class="row">
-
-                                    <div class="form-group col-md-8">
+                                    <div class="form-group col-md-6">
                                         <label for="processo">Número do processo</label>
-                                        <input type="text" class="form-control" id="processo" placeholder="Ex.: 0001/2017" v-model="processo.processo">
+                                        <input type="text" class="form-control" id="processo" placeholder="Ex.: 0001/2017" v-model="processo.processo" v-on:focus="nullErrors()">
+                                        <span class="text-danger small" v-if="error.processo" v-text="error.processo"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="banca">Número da banca</label>
+                                        <input type="text" class="form-control" id="banca" placeholder="Ex.: 150" v-model="processo.banca" v-on:focus="nullErrors()">
+                                        <span class="text-danger small" v-if="error.banca" v-text="error.banca"></span>
                                     </div>
 
                                     <div class="form-group col-md-4">
-                                        <label for="banca">Número da banca</label>
-                                        <input type="text" class="form-control" id="banca" placeholder="Ex.: 150" v-model="processo.banca">
+                                        <label>Tipo</label>
+                                        <select class="form-control select2" style="width: 100%;" aria-hidden="true" v-model="processo.tipo" v-on:focus="nullErrors()">
+                                            <option selected="selected">Selecione um tipo</option>
+                                            <option value="rsc-I">RSC-I</option>
+                                            <option value="rsc-II">RSC-II</option>
+                                            <option value="rsc-III">RSC-III</option>
+                                        </select>
+                                        <span class="text-danger small" v-if="error.tipo" v-text="error.tipo"></span>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="link">Link</label>
-                                    <input type="text" class="form-control" id="link" placeholder="Ex.: http://ifro.edu.br" v-model="processo.link">
                                 </div>
 
                                 <div class="row">
 
-                                    <div class="form-group col-md-4">
-                                        <label>Tipo</label>
-                                        <select class="form-control select2" style="width: 100%;" aria-hidden="true" v-model="processo.tipo">
-                                            <option selected="selected">Selecione um tipo</option>
-                                            <option>RSC-I</option>
-                                            <option>RSC-II</option>
-                                            <option>RSC-III</option>
-                                        </select>
+                                    <div class="form-group col-md-6">
+                                        <label for="link">Link</label>
+                                        <input type="text" class="form-control" id="link" placeholder="Ex.: http://ifro.edu.br" v-model="processo.link" v-on:focus="nullErrors()">
+                                        <span class="text-danger small" v-if="error.link" v-text="error.link"></span>
                                     </div>
 
-                                    <div class="form-group col-md-8">
+                                    <div class="form-group col-md-6">
                                         <label>Responsável</label>
-                                        <select class="form-control select2" style="width: 100%;" aria-hidden="true" v-model="processo.user_id">
-                                            <option selected="selected">Selecione um tipo</option>
-                                            <option>Lorena Tavares</option>
-                                            <option>João Teixeira</option>
-                                        </select>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" v-model="processo.atribuir"> Atribuir a mim
+                                            </label>
+                                        </div>
                                     </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <hr>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="nome">Nome do servidor (Avaliado)</label>
+                                        <input type="text" class="form-control" id="nome" placeholder="Nome" v-model="processo.nome" v-on:focus="nullErrors()">
+                                        <span class="text-danger small" v-if="error.nome" v-text="error.nome"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="siape">Siape</label>
+                                        <input type="text" class="form-control" id="siape" placeholder="Siape" v-model="processo.siape" v-on:focus="nullErrors()">
+                                        <span class="text-danger small" v-if="error.siape" v-text="error.siape"></span>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label for="email">E-mail</label>
+                                        <input type="email" class="form-control" id="email" placeholder="E-mail" v-model="processo.email" v-on:focus="nullErrors()">
+                                        <span class="text-danger small" v-if="error.email" v-text="error.email"></span>
+                                    </div>
+
                                 </div>
 
                             </div>
-                            {{ processo }}
-                            <!-- /.box-body -->
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -81,17 +106,59 @@
                     banca: '',
                     link: '',
                     tipo: '',
-                    user_id: 0
+                    nome: '',
+                    siape: '',
+                    email: '',
+                    atribuir: false
+                },
+
+                error: {
+                    processo: '',
+                    banca: '',
+                    link: '',
+                    tipo: '',
+                    nome: '',
+                    siape: '',
+                    email: ''
                 }
             }
         },
 
         methods: {
+            nullErrors () {
+                this.error = {
+                    processo: '',
+                    banca: '',
+                    link: '',
+                    tipo: '',
+                    nome: '',
+                    siape: '',
+                    email: ''
+                }
+            },
+
             save () {
+                var self = this;
+
                 this.$http
                     .post('/api/processo', this.processo)
                     .then((response) => {
-                        console.log(response)
+                        var data = response.data;
+                        console.log(data)
+                        if(!data.success) {
+                            var error = self.error,
+                                errors = data.errors;
+
+                            error.processo = errors.processo[0];
+                            error.banca = errors.banca[0];
+                            error.link = errors.link[0];
+                            error.tipo = errors.tipo[0];
+                            error.nome = errors.nome[0];
+                            error.siape = errors.siape[0];
+                            error.email = errors.email[0];
+                        } else {
+
+                        }
                     })
                     .catch((response) => {
                         console.log('Error')

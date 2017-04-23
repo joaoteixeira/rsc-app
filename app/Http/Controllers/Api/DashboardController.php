@@ -34,4 +34,10 @@ class DashboardController extends Controller
                  'financeira' => $processos->count()];
     }
 
+    public function newProcessos()
+    {
+        return Processo::doesntHave('avaliadores')->get();
+
+    }
+
 }

@@ -18,13 +18,13 @@
             <!-- /.box-header -->
             <div class="box-body">
                 <ul class="todo-list ui-sortable">
-                    <li class="">
+                    <li class="" v-for="processo in processos">
                         <!-- drag handle -->
                         <span class="handle ui-sortable-handle">
                         <i class="fa fa-ellipsis-v"></i>
                         <i class="fa fa-ellipsis-v"></i>
                       </span>
-                        <span class="text">Design a nice theme</span>
+                        <span class="text">{{ processo.processo }} - {{ processo.tipo }}</span>
                         <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
                         <div class="tools">
                             <i class="fa fa-edit"></i>
@@ -111,6 +111,23 @@
         data() {
             return {
                 processoModalVisible: false,
+                processos: [{}]
+            }
+        },
+
+        mounted: function() {
+            this.getProcessosNovos();
+        },
+
+        methods: {
+            getProcessosNovos () {
+                this.$http.get('/api/processos-novos').then(response => {
+                    this.processos = response.data;
+
+                }, response => {
+                    // error callback
+                    console.log('Error');
+                });
             }
         }
     }

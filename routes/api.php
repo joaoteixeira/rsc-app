@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace'=>'Api'], function () {
 
     Route::get('/indicadores', 'DashboardController@index');
+    Route::get('/processos-novos', 'DashboardController@newProcessos');
 
     Route::resource('processo', 'ProcessoController');
 
