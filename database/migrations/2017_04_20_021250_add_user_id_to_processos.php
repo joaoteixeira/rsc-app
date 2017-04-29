@@ -27,8 +27,12 @@ class AddUserIdToProcessos extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::table('processos', function (Blueprint $table) {
             $table->dropColumn('user_id');
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 }

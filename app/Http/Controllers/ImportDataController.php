@@ -13,7 +13,9 @@ class ImportDataController extends Controller
     public function index()
     {
 
-        Excel::load(storage_path('excel/files.xlsx'), function ($reader) {
+        Excel::load(storage_path('excel/file2.xlsx'), function ($reader) {
+
+            //dd($reader);
 
             // Getting all results
             //$results = $reader->dd();
@@ -67,49 +69,59 @@ class ImportDataController extends Controller
 
     private function insertPrepare($row)
     {
-        $servidorData = [
-            'nome'  => $row->interessado_avaliado,
-            'siape' => $row->siape_avaliado,
-        ];
-
-        $servidor = $this->insertServidor($servidorData);
 
 
-        $processoData = [
-            'servidor_id' => $servidor->id,
-            'banca'       => intval($row->banca),
-            'processo'    => $row->processo,
-        ];
+        if(!empty($row->interessado_avaliado)) {
 
-        $processo = $this->insertProcesso($processoData);
-
-        $avaliadores[] = [
-            'nome'             => $row->avaliador_interno,
-            'tipo'             => 'interno',
-            'siape'            => intval($row->siape),
-            'instituicao_'     => $row->instituicao_interno,
-            'status_pagamento' => $row->status_pagto_interno,
-        ];
-
-        $avaliadores[] = [
-            'nome'             => $row->externo_1,
-            'tipo'             => 'externo',
-            'siape'            => intval($row->siape_externo_1),
-            'instituicao_'     => $row->instituicao_externo_1,
-            'status_pagamento' => $row->status_pagto_externo_1,
-        ];
-
-        if (!empty($row->externo_2)) {
-            $avaliadores[] = [
-                'nome'             => $row->externo_2,
-                'tipo'             => 'externo',
-                'siape'            => intval($row->siape_externo_2),
-                'instituicao_'     => $row->instituicao_externo_2,
-                'status_pagamento' => $row->status_pagto_externo_2,
+            $servidorData = [
+                'nome'  => strtoupper($row->interessado_avaliado),
+                'siape' => $row->siape_avaliado,
             ];
-        }
 
-        $this->insertAvaliador($avaliadores, $processo);
+            $servidor = $this->insertServidor($servidorData);
+
+
+            $processoData = [
+                'servidor_id' => $servidor->id,
+                'banca'       => intval($row->banca),
+                'processo'    => $row->processo,
+            ];
+
+            $processo = $this->insertProcesso($processoData);
+
+            $avaliadores = [];
+
+            if (!empty($row->avaliador_interno))
+                $avaliadores[] = [
+                    'nome'             => strtoupper($row->avaliador_interno),
+                    'tipo'             => 'interno',
+                    'siape'            => intval($row->siape),
+                    'instituicao_'     => strtoupper($row->instituicao_interno),
+                    'status_pagamento' => $row->status_pagto_interno,
+                ];
+
+            if (!empty($row->externo_1))
+                $avaliadores[] = [
+                    'nome'             => strtoupper($row->externo_1),
+                    'tipo'             => 'externo',
+                    'siape'            => intval($row->siape_externo_1),
+                    'instituicao_'     => strtoupper($row->instituicao_externo_1),
+                    'status_pagamento' => $row->status_pagto_externo_1,
+                ];
+
+            if (!empty($row->externo_2)) {
+                $avaliadores[] = [
+                    'nome'             => strtoupper($row->externo_2),
+                    'tipo'             => 'externo',
+                    'siape'            => intval($row->siape_externo_2),
+                    'instituicao_'     => strtoupper($row->instituicao_externo_2),
+                    'status_pagamento' => $row->status_pagto_externo_2,
+                ];
+            }
+
+            if(sizeof($avaliadores) > 0)
+                $this->insertAvaliador($avaliadores, $processo);
+        }
     }
 
     private function insertServidor($servidor)

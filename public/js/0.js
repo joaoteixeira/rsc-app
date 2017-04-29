@@ -372,8 +372,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
-            processoModalVisible: false
+            processoModalVisible: false,
+            processos: [{}]
         };
+    },
+
+
+    mounted: function mounted() {
+        this.getProcessosNovos();
+    },
+
+    methods: {
+        getProcessosNovos: function getProcessosNovos() {
+            var _this = this;
+
+            this.$http.get('/api/processos-novos').then(function (response) {
+                _this.processos = response.data;
+            }, function (response) {
+                // error callback
+                console.log('Error');
+            });
+        }
     }
 });
 
@@ -456,6 +475,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -465,13 +509,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             processo: {
-                numero: '',
+                processo: '',
                 banca: '',
                 link: '',
                 tipo: '',
-                user_id: 0
+                nome: '',
+                siape: '',
+                email: '',
+                atribuir: false
+            },
+
+            error: {
+                processo: '',
+                banca: '',
+                link: '',
+                tipo: '',
+                nome: '',
+                siape: '',
+                email: ''
             }
         };
+    },
+
+
+    methods: {
+        nullErrors: function nullErrors() {
+            this.error = {
+                processo: '',
+                banca: '',
+                link: '',
+                tipo: '',
+                nome: '',
+                siape: '',
+                email: ''
+            };
+        },
+        save: function save() {
+            var self = this;
+
+            this.$http.post('/api/processo', this.processo).then(function (response) {
+                var data = response.data;
+                console.log(data);
+                if (!data.success) {
+                    var error = self.error,
+                        errors = data.errors;
+
+                    error.processo = errors.processo[0];
+                    error.banca = errors.banca[0];
+                    error.link = errors.link[0];
+                    error.tipo = errors.tipo[0];
+                    error.nome = errors.nome[0];
+                    error.siape = errors.siape[0];
+                    error.email = errors.email[0];
+                } else {}
+            }).catch(function (response) {
+                console.log('Error');
+            });
+        }
     }
 });
 
@@ -596,7 +690,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "processo_modal"
     }
   }, [_c('div', {
-    staticClass: "modal-dialog"
+    staticClass: "modal-dialog modal-lg"
   }, [_c('div', {
     staticClass: "modal-content"
   }, [_c('div', {
@@ -625,7 +719,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
-    staticClass: "form-group col-md-8"
+    staticClass: "form-group col-md-6"
   }, [_c('label', {
     attrs: {
       "for": "processo"
@@ -634,8 +728,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.processo.numero),
-      expression: "processo.numero"
+      value: (_vm.processo.processo),
+      expression: "processo.processo"
     }],
     staticClass: "form-control",
     attrs: {
@@ -644,16 +738,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "placeholder": "Ex.: 0001/2017"
     },
     domProps: {
-      "value": (_vm.processo.numero)
+      "value": (_vm.processo.processo)
     },
     on: {
+      "focus": function($event) {
+        _vm.nullErrors()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.processo.numero = $event.target.value
+        _vm.processo.processo = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group col-md-4"
+  }), _vm._v(" "), (_vm.error.processo) ? _c('span', {
+    staticClass: "text-danger small",
+    domProps: {
+      "textContent": _vm._s(_vm.error.processo)
+    }
+  }) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group col-md-2"
   }, [_c('label', {
     attrs: {
       "for": "banca"
@@ -675,13 +777,74 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.processo.banca)
     },
     on: {
+      "focus": function($event) {
+        _vm.nullErrors()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.processo.banca = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
+  }), _vm._v(" "), (_vm.error.banca) ? _c('span', {
+    staticClass: "text-danger small",
+    domProps: {
+      "textContent": _vm._s(_vm.error.banca)
+    }
+  }) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group col-md-4"
+  }, [_c('label', [_vm._v("Tipo")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.processo.tipo),
+      expression: "processo.tipo"
+    }],
+    staticClass: "form-control select2",
+    staticStyle: {
+      "width": "100%"
+    },
+    attrs: {
+      "aria-hidden": "true"
+    },
+    on: {
+      "focus": function($event) {
+        _vm.nullErrors()
+      },
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.processo.tipo = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "selected": "selected"
+    }
+  }, [_vm._v("Selecione um tipo")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "rsc-I"
+    }
+  }, [_vm._v("RSC-I")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "rsc-II"
+    }
+  }, [_vm._v("RSC-II")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "rsc-III"
+    }
+  }, [_vm._v("RSC-III")])]), _vm._v(" "), (_vm.error.tipo) ? _c('span', {
+    staticClass: "text-danger small",
+    domProps: {
+      "textContent": _vm._s(_vm.error.tipo)
+    }
+  }) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "form-group col-md-6"
   }, [_c('label', {
     attrs: {
       "for": "link"
@@ -703,76 +866,165 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.processo.link)
     },
     on: {
+      "focus": function($event) {
+        _vm.nullErrors()
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.processo.link = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), (_vm.error.link) ? _c('span', {
+    staticClass: "text-danger small",
+    domProps: {
+      "textContent": _vm._s(_vm.error.link)
+    }
+  }) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group col-md-6"
+  }, [_c('label', [_vm._v("Responsável")]), _vm._v(" "), _c('div', {
+    staticClass: "checkbox"
+  }, [_c('label', [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.processo.atribuir),
+      expression: "processo.atribuir"
+    }],
+    attrs: {
+      "type": "checkbox"
+    },
+    domProps: {
+      "checked": Array.isArray(_vm.processo.atribuir) ? _vm._i(_vm.processo.atribuir, null) > -1 : (_vm.processo.atribuir)
+    },
+    on: {
+      "__c": function($event) {
+        var $$a = _vm.processo.atribuir,
+          $$el = $event.target,
+          $$c = $$el.checked ? (true) : (false);
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$c) {
+            $$i < 0 && (_vm.processo.atribuir = $$a.concat($$v))
+          } else {
+            $$i > -1 && (_vm.processo.atribuir = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+          }
+        } else {
+          _vm.processo.atribuir = $$c
+        }
+      }
+    }
+  }), _vm._v(" Atribuir a mim\n                                        ")])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
-  }, [_c('div', {
+  }, [_c('hr'), _vm._v(" "), _c('div', {
+    staticClass: "form-group col-md-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "nome"
+    }
+  }, [_vm._v("Nome do servidor (Avaliado)")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.processo.nome),
+      expression: "processo.nome"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "nome",
+      "placeholder": "Nome"
+    },
+    domProps: {
+      "value": (_vm.processo.nome)
+    },
+    on: {
+      "focus": function($event) {
+        _vm.nullErrors()
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.processo.nome = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.error.nome) ? _c('span', {
+    staticClass: "text-danger small",
+    domProps: {
+      "textContent": _vm._s(_vm.error.nome)
+    }
+  }) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group col-md-2"
+  }, [_c('label', {
+    attrs: {
+      "for": "siape"
+    }
+  }, [_vm._v("Siape")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.processo.siape),
+      expression: "processo.siape"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "siape",
+      "placeholder": "Siape"
+    },
+    domProps: {
+      "value": (_vm.processo.siape)
+    },
+    on: {
+      "focus": function($event) {
+        _vm.nullErrors()
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.processo.siape = $event.target.value
+      }
+    }
+  }), _vm._v(" "), (_vm.error.siape) ? _c('span', {
+    staticClass: "text-danger small",
+    domProps: {
+      "textContent": _vm._s(_vm.error.siape)
+    }
+  }) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "form-group col-md-4"
-  }, [_c('label', [_vm._v("Tipo")]), _vm._v(" "), _c('select', {
+  }, [_c('label', {
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("E-mail")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.processo.tipo),
-      expression: "processo.tipo"
+      value: (_vm.processo.email),
+      expression: "processo.email"
     }],
-    staticClass: "form-control select2",
-    staticStyle: {
-      "width": "100%"
-    },
+    staticClass: "form-control",
     attrs: {
-      "aria-hidden": "true"
+      "type": "email",
+      "id": "email",
+      "placeholder": "E-mail"
+    },
+    domProps: {
+      "value": (_vm.processo.email)
     },
     on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.processo.tipo = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      "focus": function($event) {
+        _vm.nullErrors()
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.processo.email = $event.target.value
       }
     }
-  }, [_c('option', {
-    attrs: {
-      "selected": "selected"
+  }), _vm._v(" "), (_vm.error.email) ? _c('span', {
+    staticClass: "text-danger small",
+    domProps: {
+      "textContent": _vm._s(_vm.error.email)
     }
-  }, [_vm._v("Selecione um tipo")]), _vm._v(" "), _c('option', [_vm._v("RSC-I")]), _vm._v(" "), _c('option', [_vm._v("RSC-II")]), _vm._v(" "), _c('option', [_vm._v("RSC-III")])])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group col-md-8"
-  }, [_c('label', [_vm._v("Responsável")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.processo.user_id),
-      expression: "processo.user_id"
-    }],
-    staticClass: "form-control select2",
-    staticStyle: {
-      "width": "100%"
-    },
-    attrs: {
-      "aria-hidden": "true"
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.processo.user_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', {
-    attrs: {
-      "selected": "selected"
-    }
-  }, [_vm._v("Selecione um tipo")]), _vm._v(" "), _c('option', [_vm._v("Lorena Tavares")]), _vm._v(" "), _c('option', [_vm._v("João Teixeira")])])])])]), _vm._v("\n                        " + _vm._s(_vm.processo) + "\n                        ")])]), _vm._v(" "), _c('div', {
+  }) : _vm._e()])])])])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_c('button', {
     staticClass: "btn btn-default pull-left",
@@ -784,6 +1036,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-primary",
     attrs: {
       "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.save()
+      }
     }
   }, [_vm._v("Salvar")])])])])])])
 },staticRenderFns: []}
@@ -805,11 +1062,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "processos_aberto"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('processo-modal')], 1)
+  }, [_c('div', {
+    staticClass: "box box-primary"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "box-body"
+  }, [_c('ul', {
+    staticClass: "todo-list ui-sortable"
+  }, [_vm._l((_vm.processos), function(processo) {
+    return _c('li', {}, [_vm._m(1, true), _vm._v(" "), _c('span', {
+      staticClass: "text"
+    }, [_vm._v(_vm._s(processo.processo) + " - " + _vm._s(processo.tipo))]), _vm._v(" "), _vm._m(2, true), _vm._v(" "), _vm._m(3, true)])
+  }), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7), _vm._v(" "), _vm._m(8)], 2)])]), _vm._v(" "), _c('processo-modal')], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "box box-primary"
-  }, [_c('div', {
     staticClass: "box-header ui-sortable-handle",
     staticStyle: {
       "cursor": "move"
@@ -832,29 +1097,31 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-plus"
-  }), _vm._v(" Novo Processo\n                ")])])]), _vm._v(" "), _c('div', {
-    staticClass: "box-body"
-  }, [_c('ul', {
-    staticClass: "todo-list ui-sortable"
-  }, [_c('li', {}, [_c('span', {
+  }), _vm._v(" Novo Processo\n                ")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
     staticClass: "handle ui-sortable-handle"
   }, [_c('i', {
     staticClass: "fa fa-ellipsis-v"
   }), _vm._v(" "), _c('i', {
     staticClass: "fa fa-ellipsis-v"
-  })]), _vm._v(" "), _c('span', {
-    staticClass: "text"
-  }, [_vm._v("Design a nice theme")]), _vm._v(" "), _c('small', {
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('small', {
     staticClass: "label label-danger"
   }, [_c('i', {
     staticClass: "fa fa-clock-o"
-  }), _vm._v(" 2 mins")]), _vm._v(" "), _c('div', {
+  }), _vm._v(" 2 mins")])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "tools"
   }, [_c('i', {
     staticClass: "fa fa-edit"
   }), _vm._v(" "), _c('i', {
     staticClass: "fa fa-trash-o"
-  })])]), _vm._v(" "), _c('li', [_c('span', {
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('span', {
     staticClass: "handle ui-sortable-handle"
   }, [_c('i', {
     staticClass: "fa fa-ellipsis-v"
@@ -872,7 +1139,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-edit"
   }), _vm._v(" "), _c('i', {
     staticClass: "fa fa-trash-o"
-  })])]), _vm._v(" "), _c('li', [_c('span', {
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('span', {
     staticClass: "handle ui-sortable-handle"
   }, [_c('i', {
     staticClass: "fa fa-ellipsis-v"
@@ -890,7 +1159,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-edit"
   }), _vm._v(" "), _c('i', {
     staticClass: "fa fa-trash-o"
-  })])]), _vm._v(" "), _c('li', [_c('span', {
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('span', {
     staticClass: "handle ui-sortable-handle"
   }, [_c('i', {
     staticClass: "fa fa-ellipsis-v"
@@ -908,7 +1179,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-edit"
   }), _vm._v(" "), _c('i', {
     staticClass: "fa fa-trash-o"
-  })])]), _vm._v(" "), _c('li', [_c('span', {
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('span', {
     staticClass: "handle ui-sortable-handle"
   }, [_c('i', {
     staticClass: "fa fa-ellipsis-v"
@@ -926,7 +1199,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-edit"
   }), _vm._v(" "), _c('i', {
     staticClass: "fa fa-trash-o"
-  })])]), _vm._v(" "), _c('li', [_c('span', {
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('span', {
     staticClass: "handle ui-sortable-handle"
   }, [_c('i', {
     staticClass: "fa fa-ellipsis-v"
@@ -944,7 +1219,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-edit"
   }), _vm._v(" "), _c('i', {
     staticClass: "fa fa-trash-o"
-  })])])])])])
+  })])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

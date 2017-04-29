@@ -25,7 +25,7 @@ class CreateAvaliadoresTable extends Migration
             $table->string('banco')->nullable();
             $table->string('agencia')->nullable();
             $table->string('conta')->nullable();
-            $table->string('instituicao_');
+            $table->string('instituicao_')->nullable();
             $table->enum('status_pagamento', ['pendente', 'pago', 'restricao']);
             $table->timestamps();
 
@@ -40,6 +40,10 @@ class CreateAvaliadoresTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('avaliadores');
+
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -25,8 +25,12 @@ class AddEmailToServidores extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::table('servidores', function (Blueprint $table) {
             $table->dropColumn('email');
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 }

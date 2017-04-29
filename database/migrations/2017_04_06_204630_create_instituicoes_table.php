@@ -28,6 +28,11 @@ class CreateInstituicoesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
+
+
         Schema::dropIfExists('instituicoes');
+
+        Schema::enableForeignKeyConstraints();
     }
 }

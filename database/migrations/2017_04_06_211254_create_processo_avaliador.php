@@ -34,6 +34,10 @@ class CreateProcessoAvaliador extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('processo_avaliador');
+
+        Schema::enableForeignKeyConstraints();
     }
 }

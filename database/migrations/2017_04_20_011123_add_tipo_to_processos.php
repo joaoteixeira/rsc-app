@@ -25,8 +25,12 @@ class AddTipoToProcessos extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::table('processos', function (Blueprint $table) {
             $table->dropColumn('tipo');
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 }

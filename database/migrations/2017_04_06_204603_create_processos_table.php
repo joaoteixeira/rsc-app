@@ -19,7 +19,7 @@ class CreateProcessosTable extends Migration
             //tipo RSC I / II / III
             $table->string('link')->nullable();
             $table->string('banca');
-            $table->string('processo');
+            $table->string('processo')->nullable();
             $table->timestamps();
 
             $table->foreign('servidor_id')->references('id')->on('servidor');
@@ -33,6 +33,11 @@ class CreateProcessosTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('processos');
+
+        Schema::enableForeignKeyConstraints();
+
     }
 }
