@@ -18,7 +18,9 @@ class ProcessoController extends Controller
      */
     public function index()
     {
-        //
+        $processos = Processo::with('servidor', 'avaliadores')->get();
+
+        return [ 'data' => $processos, 'total' => $processos->count() ];
     }
 
     /**

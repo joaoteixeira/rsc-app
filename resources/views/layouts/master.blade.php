@@ -421,6 +421,8 @@ desired effect
 <script src="{!! asset('plugins/slimScroll/jquery.slimscroll.min.js') !!}"></script>
 <!-- FastClick -->
 <script src="{!! asset('plugins/fastclick/fastclick.js') !!}"></script>
+<!-- MatchHeight -->
+<script src="{!! asset('plugins/pinbox/jquery.pinbox.min.js') !!}"></script>
 
 <script type="text/javascript" src="{!! asset('js/app.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('js/main.js') !!}"></script>
@@ -430,5 +432,12 @@ desired effect
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
      fixed layout. -->
+
+<script>
+    $(function() {
+        //$('.itens-processos').matchHeight();
+
+    });
+</script>
 </body>
 </html>

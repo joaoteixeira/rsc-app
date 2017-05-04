@@ -18,6 +18,7 @@ require('bootstrap-sass');
  */
 
 window.Vue = require('vue');
+window.vueFilter = require('vue-filter')
 // window.VueRouter = require('vue-router');
 //var fs = require('fs');
 //const resolve = require('resolve');

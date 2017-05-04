@@ -19,6 +19,13 @@ const router = new Router({
             }
         },
         {
+            path: '/processos',
+            component: function (resolve) {
+                require(['../components/processo/Index'], resolve)
+            }
+        },
+
+        {
             path: '/foo',
             component: Foo
         },

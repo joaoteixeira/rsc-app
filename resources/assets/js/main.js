@@ -7,8 +7,11 @@ require('./bootstrap');
 import Vue from 'vue'
 import router from './router'
 import VueResource from 'vue-resource'
+import VueFilter from 'vue-filter'
 
 Vue.use(VueResource);
+Vue.use(VueFilter);
+
 
 /**
  * Config App

@@ -150,6 +150,8 @@ var AdminLTEOptions;
         //set select2
         $("select").select2();
 
+        $('.itens-processos').pinbox();
+
         //Extend options if external options exist
         if (typeof AdminLTEOptions !== "undefined") {
             $.extend(true,
