@@ -98,8 +98,11 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_filter__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_filter__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_filter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_filter__);
+//
+//
+//
 //
 //
 //
@@ -243,6 +246,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     updated: function updated() {
         //jQuery('.itens-processos').pinbox();
+        //swal("Good job!", "You clicked the button!", "success");
     },
 
     methods: {
@@ -335,7 +339,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }, [_c('small', {
         staticClass: "label label-default",
         class: [avaliador.tipo == 'externo' ? 'label-info' : '']
-      }, [_vm._v("\n                                    " + _vm._s(_vm._f("uppercase")(avaliador.tipo)))])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(avaliador.nome)))])])
+      }, [_vm._v("\n                                    " + _vm._s(_vm._f("uppercase")(avaliador.tipo)))])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("uppercase")(avaliador.nome)) + "\n                                    "), _c('small', {
+        staticClass: "label",
+        class: [avaliador.status_pagamento == 'pago' ? 'label-primary' : 'label-danger']
+      }, [_c('i', {
+        staticClass: "fa ",
+        class: [avaliador.status_pagamento == 'pago' ? 'fa-check' : 'fa-exclamation']
+      }), _vm._v("\n                                        " + _vm._s(avaliador.status_pagamento) + " ")])])])
     }))])]), _vm._v(" "), _vm._m(2, true)])])]) : _vm._e()
   })], 2)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

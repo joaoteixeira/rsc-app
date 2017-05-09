@@ -14,6 +14,8 @@ class CreateServidoresTable extends Migration
     public function up()
     {
         Schema::create('servidores', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->string('nome');
             $table->string('siape')->nullable();

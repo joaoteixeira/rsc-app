@@ -13,7 +13,11 @@ class CreateProcessosTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('processos', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->integer('servidor_id')->unsigned()->nullable();
             //tipo RSC I / II / III
@@ -22,8 +26,10 @@ class CreateProcessosTable extends Migration
             $table->string('processo')->nullable();
             $table->timestamps();
 
-            $table->foreign('servidor_id')->references('id')->on('servidor');
+            $table->foreign('servidor_id')->references('id')->on('servidores');
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

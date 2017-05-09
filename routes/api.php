@@ -25,6 +25,9 @@ Route::group(['namespace'=>'Api'], function () {
     Route::get('/processos-novos', 'DashboardController@newProcessos');
 
     Route::resource('processos', 'ProcessoController');
+    Route::resource('pagamentos', 'PagamentoAvaliadorController', ['only' => [
+        'index', 'store', 'destroy'
+    ]]);
 
 //    Route::get('user/profile', function () {
 //        // Uses Auth Middleware

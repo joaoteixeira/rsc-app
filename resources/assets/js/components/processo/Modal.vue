@@ -28,9 +28,9 @@
                                         <label>Tipo</label>
                                         <select class="form-control select2" style="width: 100%;" aria-hidden="true" v-model="processo.tipo" v-on:focus="nullErrors()">
                                             <option selected="selected">Selecione um tipo</option>
-                                            <option value="rsc-I">RSC-I</option>
-                                            <option value="rsc-II">RSC-II</option>
-                                            <option value="rsc-III">RSC-III</option>
+                                            <option value="RSC-I">RSC-I</option>
+                                            <option value="RSC-II">RSC-II</option>
+                                            <option value="RSC-III">RSC-III</option>
                                         </select>
                                         <span class="text-danger small" v-if="error.tipo" v-text="error.tipo"></span>
                                     </div>
@@ -141,7 +141,7 @@
                 var self = this;
 
                 this.$http
-                    .post('/api/processo', this.processo)
+                    .post('/api/processos', this.processo)
                     .then((response) => {
                         var data = response.data;
                         console.log(data)
@@ -157,7 +157,7 @@
                             error.siape = errors.siape[0];
                             error.email = errors.email[0];
                         } else {
-
+                            swal("Processo adicionado", "", "success");
                         }
                     })
                     .catch((response) => {

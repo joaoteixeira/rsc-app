@@ -17,20 +17,21 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <ul class="todo-list ui-sortable">
+                <ul class="todo-list ui-sortable" v-if="!loading">
                     <li class="" v-for="processo in processos">
                         <!-- drag handle -->
                         <span class="handle ui-sortable-handle">
                         <i class="fa fa-ellipsis-v"></i>
                         <i class="fa fa-ellipsis-v"></i>
                       </span>
-                        <span class="text">{{ processo.processo }} - {{ processo.tipo }}</span>
+                        <span class="text">{{ processo.processo }} - {{ processo.tipo }} - {{ processo.servidor.nome }}</span>
                         <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
                         <div class="tools">
                             <i class="fa fa-edit"></i>
                             <i class="fa fa-trash-o"></i>
                         </div>
                     </li>
+                    <!--
                     <li>
                       <span class="handle ui-sortable-handle">
                         <i class="fa fa-ellipsis-v"></i>
@@ -91,6 +92,7 @@
                             <i class="fa fa-trash-o"></i>
                         </div>
                     </li>
+                    <!-- -->
                 </ul>
             </div>
             <!-- /.box-body -->
@@ -110,6 +112,7 @@
 
         data() {
             return {
+                loading: true,
                 processoModalVisible: false,
                 processos: [{}]
             }
@@ -123,6 +126,7 @@
             getProcessosNovos () {
                 this.$http.get('/api/processos-novos').then(response => {
                     this.processos = response.data;
+                    this.loading = false;
 
                 }, response => {
                     // error callback

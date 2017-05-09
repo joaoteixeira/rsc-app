@@ -362,6 +362,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -372,6 +374,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
+            loading: true,
             processoModalVisible: false,
             processos: [{}]
         };
@@ -388,6 +391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.$http.get('/api/processos-novos').then(function (response) {
                 _this.processos = response.data;
+                _this.loading = false;
             }, function (response) {
                 // error callback
                 console.log('Error');
@@ -547,7 +551,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         save: function save() {
             var self = this;
 
-            this.$http.post('/api/processo', this.processo).then(function (response) {
+            this.$http.post('/api/processos', this.processo).then(function (response) {
                 var data = response.data;
                 console.log(data);
                 if (!data.success) {
@@ -561,7 +565,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     error.nome = errors.nome[0];
                     error.siape = errors.siape[0];
                     error.email = errors.email[0];
-                } else {}
+                } else {
+                    swal("Processo adicionado", "", "success");
+                }
             }).catch(function (response) {
                 console.log('Error');
             });
@@ -826,15 +832,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Selecione um tipo")]), _vm._v(" "), _c('option', {
     attrs: {
-      "value": "rsc-I"
+      "value": "RSC-I"
     }
   }, [_vm._v("RSC-I")]), _vm._v(" "), _c('option', {
     attrs: {
-      "value": "rsc-II"
+      "value": "RSC-II"
     }
   }, [_vm._v("RSC-II")]), _vm._v(" "), _c('option', {
     attrs: {
-      "value": "rsc-III"
+      "value": "RSC-III"
     }
   }, [_vm._v("RSC-III")])]), _vm._v(" "), (_vm.error.tipo) ? _c('span', {
     staticClass: "text-danger small",
@@ -1066,13 +1072,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "box box-primary"
   }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "box-body"
-  }, [_c('ul', {
+  }, [(!_vm.loading) ? _c('ul', {
     staticClass: "todo-list ui-sortable"
-  }, [_vm._l((_vm.processos), function(processo) {
+  }, _vm._l((_vm.processos), function(processo) {
     return _c('li', {}, [_vm._m(1, true), _vm._v(" "), _c('span', {
       staticClass: "text"
-    }, [_vm._v(_vm._s(processo.processo) + " - " + _vm._s(processo.tipo))]), _vm._v(" "), _vm._m(2, true), _vm._v(" "), _vm._m(3, true)])
-  }), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7), _vm._v(" "), _vm._m(8)], 2)])]), _vm._v(" "), _c('processo-modal')], 1)
+    }, [_vm._v(_vm._s(processo.processo) + " - " + _vm._s(processo.tipo) + " - " + _vm._s(processo.servidor.nome))]), _vm._v(" "), _vm._m(2, true), _vm._v(" "), _vm._m(3, true)])
+  })) : _vm._e()])]), _vm._v(" "), _c('processo-modal')], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "box-header ui-sortable-handle",
@@ -1120,106 +1126,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('i', {
     staticClass: "fa fa-trash-o"
   })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('span', {
-    staticClass: "handle ui-sortable-handle"
-  }, [_c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  })]), _vm._v(" "), _c('span', {
-    staticClass: "text"
-  }, [_vm._v("Make the theme responsive")]), _vm._v(" "), _c('small', {
-    staticClass: "label label-info"
-  }, [_c('i', {
-    staticClass: "fa fa-clock-o"
-  }), _vm._v(" 4 hours")]), _vm._v(" "), _c('div', {
-    staticClass: "tools"
-  }, [_c('i', {
-    staticClass: "fa fa-edit"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-trash-o"
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('span', {
-    staticClass: "handle ui-sortable-handle"
-  }, [_c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  })]), _vm._v(" "), _c('span', {
-    staticClass: "text"
-  }, [_vm._v("Let theme shine like a star")]), _vm._v(" "), _c('small', {
-    staticClass: "label label-warning"
-  }, [_c('i', {
-    staticClass: "fa fa-clock-o"
-  }), _vm._v(" 1 day")]), _vm._v(" "), _c('div', {
-    staticClass: "tools"
-  }, [_c('i', {
-    staticClass: "fa fa-edit"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-trash-o"
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('span', {
-    staticClass: "handle ui-sortable-handle"
-  }, [_c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  })]), _vm._v(" "), _c('span', {
-    staticClass: "text"
-  }, [_vm._v("Let theme shine like a star")]), _vm._v(" "), _c('small', {
-    staticClass: "label label-success"
-  }, [_c('i', {
-    staticClass: "fa fa-clock-o"
-  }), _vm._v(" 3 days")]), _vm._v(" "), _c('div', {
-    staticClass: "tools"
-  }, [_c('i', {
-    staticClass: "fa fa-edit"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-trash-o"
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('span', {
-    staticClass: "handle ui-sortable-handle"
-  }, [_c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  })]), _vm._v(" "), _c('span', {
-    staticClass: "text"
-  }, [_vm._v("Check your messages and notifications")]), _vm._v(" "), _c('small', {
-    staticClass: "label label-primary"
-  }, [_c('i', {
-    staticClass: "fa fa-clock-o"
-  }), _vm._v(" 1 week")]), _vm._v(" "), _c('div', {
-    staticClass: "tools"
-  }, [_c('i', {
-    staticClass: "fa fa-edit"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-trash-o"
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('span', {
-    staticClass: "handle ui-sortable-handle"
-  }, [_c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-ellipsis-v"
-  })]), _vm._v(" "), _c('span', {
-    staticClass: "text"
-  }, [_vm._v("Let theme shine like a star")]), _vm._v(" "), _c('small', {
-    staticClass: "label label-default"
-  }, [_c('i', {
-    staticClass: "fa fa-clock-o"
-  }), _vm._v(" 1 month")]), _vm._v(" "), _c('div', {
-    staticClass: "tools"
-  }, [_c('i', {
-    staticClass: "fa fa-edit"
-  }), _vm._v(" "), _c('i', {
-    staticClass: "fa fa-trash-o"
-  })])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

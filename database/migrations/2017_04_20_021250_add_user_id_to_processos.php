@@ -13,11 +13,15 @@ class AddUserIdToProcessos extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::table('processos', function (Blueprint $table) {
-            $table->integer('user_id')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

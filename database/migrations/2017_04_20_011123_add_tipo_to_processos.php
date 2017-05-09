@@ -13,9 +13,13 @@ class AddTipoToProcessos extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::table('processos', function (Blueprint $table) {
-            $table->enum('tipo', ['rsc-I', 'rsc-II', 'rsc-III'])->nullable();
+            $table->enum('tipo', ['RSC-I', 'RSC-II', 'RSC-III'])->nullable();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

@@ -32,6 +32,8 @@
     <link rel="stylesheet" href="{!! asset('plugins/daterangepicker/daterangepicker.css') !!}">
     <!-- Select 2 -->
     <link rel="stylesheet" href="{!! asset('plugins/select2/select2.css') !!}">
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="{!! asset('plugins/sweetalert/sweetalert.css') !!}">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{!! asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') !!}">
 
@@ -421,6 +423,8 @@ desired effect
 <script src="{!! asset('plugins/slimScroll/jquery.slimscroll.min.js') !!}"></script>
 <!-- FastClick -->
 <script src="{!! asset('plugins/fastclick/fastclick.js') !!}"></script>
+<!-- SweetAlert -->
+<script src="{!! asset('plugins/sweetalert/sweetalert.min.js') !!}"></script>
 <!-- MatchHeight -->
 <script src="{!! asset('plugins/pinbox/jquery.pinbox.min.js') !!}"></script>
 
@@ -436,6 +440,7 @@ desired effect
 <script>
     $(function() {
         //$('.itens-processos').matchHeight();
+        //swal("Good job!", "You clicked the button!", "success");
 
     });
 </script>

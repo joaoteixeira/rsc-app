@@ -46,7 +46,7 @@ class ProcessoController extends Controller
         if ($validator->fails())
             return [ 'success' => false, 'errors' => $validator->errors() ];
 
-        $servidor = Servidor::firstOrCreate($request->all());
+        $servidor = Servidor::firstOrCreate(['nome' => $request->nome, 'siape' => $request->siape, 'email' => $request->email]);
 
         $processo = new Processo;
         $processo->servidor_id = $servidor->id;

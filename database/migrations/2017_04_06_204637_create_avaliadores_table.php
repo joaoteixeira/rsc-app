@@ -13,7 +13,11 @@ class CreateAvaliadoresTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('avaliadores', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->integer('instituicao_id')->unsigned()->nullable();
             $table->enum('tipo', ['interno', 'externo']);
@@ -31,6 +35,8 @@ class CreateAvaliadoresTable extends Migration
 
             $table->foreign('instituicao_id')->references('id')->on('instituicoes');
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

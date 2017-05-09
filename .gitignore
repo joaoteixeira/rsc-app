@@ -7,3 +7,5 @@
 Homestead.json
 Homestead.yaml
 .env
+app-vue
+.DS_Store

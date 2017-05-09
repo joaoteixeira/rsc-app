@@ -36,7 +36,7 @@ class DashboardController extends Controller
 
     public function newProcessos()
     {
-        return Processo::doesntHave('avaliadores')->get();
+        return Processo::with('servidor')->doesntHave('avaliadores')->get();
 
     }
 

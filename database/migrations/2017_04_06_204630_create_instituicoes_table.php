@@ -14,6 +14,8 @@ class CreateInstituicoesTable extends Migration
     public function up()
     {
         Schema::create('instituicoes', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->string('nome');
             $table->string('sigla');

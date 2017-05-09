@@ -133,7 +133,7 @@ class ImportDataController extends Controller
     {
         foreach ($avaliadores as $avaliador) {
             $aval = Avaliador::firstOrCreate($avaliador);
-            $processo->avaliadores()->attach($aval);
+            $processo->avaliadores()->attach($aval, ['pagamento' => $aval->status_pagamento]);
         }
 
     }

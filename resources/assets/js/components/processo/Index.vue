@@ -73,7 +73,10 @@
                                 <tr v-for="avaliador in item.avaliadores">
                                     <td width="1"><small class="label label-default" v-bind:class="[avaliador.tipo == 'externo' ? 'label-info' : '' ]">
                                         {{ avaliador.tipo | uppercase }}</small></td>
-                                    <td>{{ avaliador.nome | uppercase }}</td>
+                                    <td>{{ avaliador.nome | uppercase }}
+                                        <small class="label" v-bind:class="[avaliador.status_pagamento == 'pago' ? 'label-primary' : 'label-danger' ]">
+                                            <i class="fa " v-bind:class="[avaliador.status_pagamento == 'pago' ? 'fa-check' : 'fa-exclamation' ]"></i>
+                                            {{ avaliador.status_pagamento}} </small></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -144,6 +147,7 @@
 
         updated: function () {
             //jQuery('.itens-processos').pinbox();
+            //swal("Good job!", "You clicked the button!", "success");
         },
 
         methods: {

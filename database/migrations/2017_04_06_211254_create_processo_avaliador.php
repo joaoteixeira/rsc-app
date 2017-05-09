@@ -13,7 +13,10 @@ class CreateProcessoAvaliador extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('avaliador_processo', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
 
             $table->integer('processo_id')->unsigned()->index();
             $table->foreign('processo_id')->references('id')
@@ -23,8 +26,11 @@ class CreateProcessoAvaliador extends Migration
             $table->foreign('avaliador_id')->references('id')
                 ->on('avaliadores')->onDelete('cascade');
 
+            $table->enum('pagamento', ['pendente', 'pago', 'restricao']);
             $table->timestamps();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
