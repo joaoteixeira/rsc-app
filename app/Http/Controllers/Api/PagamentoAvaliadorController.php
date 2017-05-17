@@ -19,7 +19,7 @@ class PagamentoAvaliadorController extends Controller
      */
     public function index()
     {
-        $pagamentos = PagamentoAvaliador::all();
+        $pagamentos = PagamentoAvaliador::with('user', 'processo', 'avaliador')->get();
 
         return $pagamentos;
     }
@@ -32,28 +32,7 @@ class PagamentoAvaliadorController extends Controller
      */
     public function store(Request $request)
     {
-
         return $this->checkData($request);
-
-
-        $validator = $this->validator($request->all());
-
-        if ($validator->fails())
-            return ['success' => false, 'errors' => $validator->errors()];
-
-
-        if (!$processo || !$avaliador)
-            return ['success' => false, 'errors' => ['Erro ao adicionar processo/avaliador.']];
-
-
-        $pagamento = PagamentoAvaliador::firstOrCreate([
-            'user_id'      => 1,
-            'processo_id'  => $processo->id,
-            'avaliador_id' => $avaliador->id,
-            'tipo'         => $avaliador->tipo
-        ]);
-
-        return ['success' => true, 'data' => $pagamento];
     }
 
     /**
@@ -79,7 +58,8 @@ class PagamentoAvaliadorController extends Controller
         if (!$avaliador)
             return ['success' => false, 'errors' => ["O sistema não encontrou o avaliador {$request->avaliador}"]];
 
-        if($avaliador->status_pagamento == 'pago')
+        //if(empty($avaliador->agencia) || empty($avaliador->conta))
+        //    return ['success' => false, 'errors' => ["O dados de bancário do Avaliador está incompleto. Favor verificar!"]];
 
         $processo = Processo::whereHas('avaliadores', function ($q) use ($avaliador) {
             $q->where('id', $avaliador->id);
@@ -88,12 +68,22 @@ class PagamentoAvaliadorController extends Controller
         if(!$processo)
             return ['success' => false, 'errors' => ['O sistema não encontrou o processo do avaliador enviado.']];
 
+        if($processo->pagamento == 'pago')
+            return ['success' => false, 'errors' => ["O avaliador já foi pago no processo Nº {$processo->processo} anteriormente."]];
 
+        return $this->addAvaliador($processo, $avaliador);
+    }
 
+    protected function addAvaliador($processo, $avaliador)
+    {
+        $pagamento = PagamentoAvaliador::firstOrCreate([
+            'user_id'      => 1, //TODO trocar por Auth::id()
+            'processo_id'  => $processo->id,
+            'avaliador_id' => $avaliador->id,
+            'tipo'         => $avaliador->tipo
+        ]);
 
-        return $processo;
-
-
+        return ['success' => true, 'data' => $pagamento];
     }
 
     protected function validator(array $data)

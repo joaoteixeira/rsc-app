@@ -1,6 +1,5 @@
 <template>
     <div id="dashboard">
-        <router-link to="example" >Example</router-link>
         <div class="row">
             <indicadores></indicadores>
         </div>

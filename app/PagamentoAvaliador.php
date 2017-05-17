@@ -24,17 +24,22 @@ class PagamentoAvaliador extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User');
     }
 
     public function processo()
     {
-        return $this->belongsTo('App\Processo', 'processo_id');
+        return $this->belongsTo('App\Processo');
     }
 
     public function avaliador()
     {
-        return $this->belongsTo('App\Avaliador', 'avaliador_id');
+        return $this->belongsTo('App\Avaliador');
+    }
+
+    public function responsavel()
+    {
+        return $this->user()->name;
     }
 
 }
