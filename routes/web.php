@@ -18,3 +18,19 @@ Route::get('/home', 'HomeController@index');
 Route::get('/dashboard', 'HomeController@index');
 
 Route::get('/import', 'ImportDataController@index');
+
+
+Route::group(['middleware' => 'auth', 'prefix' => 'api', 'namespace'=>'Api'], function () {
+
+    Route::get('/indicadores', 'DashboardController@index');
+    Route::get('/processos-novos', 'DashboardController@newProcessos');
+
+    Route::resource('processos', 'ProcessoController');
+    Route::resource('pagamentos', 'PagamentoAvaliadorController', ['only' => [
+        'index', 'store', 'destroy'
+    ]]);
+
+    Route::get('user/profile', function () {
+        // Uses Auth Middleware
+    });
+});

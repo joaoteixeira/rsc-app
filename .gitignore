@@ -4,6 +4,8 @@
 /storage/*.key
 /vendor
 /.idea
+/documentos
+/storage/excel
 Homestead.json
 Homestead.yaml
 .env

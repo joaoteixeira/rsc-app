@@ -118,7 +118,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -1145,17 +1144,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "dashboard"
     }
-  }, [_c('router-link', {
-    attrs: {
-      "to": "example"
-    }
-  }, [_vm._v("Example")]), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     staticClass: "row"
   }, [_c('indicadores')], 1), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('section', {
     staticClass: "col-lg-7"
-  }, [_c('processos-aberto')], 1)])], 1)
+  }, [_c('processos-aberto')], 1)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
